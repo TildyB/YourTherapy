@@ -1,0 +1,19 @@
+.oneTask{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 5px;
+}
+ .oneTaskImportant{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-left: 3px solid red;
+    padding-left: 5px;
+
+}
+.taskTitleDiv{
+    min-width: 30%;
+}

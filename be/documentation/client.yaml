@@ -1,0 +1,430 @@
+openapi: 3.0.3
+info:
+  version: "1.0"
+  title: YourTherapy - 1.0
+  description: This is the server of YourTherapy app
+servers:
+  - url: http://localhost:8004/api
+
+tags:
+  - name: client
+    description: Everything that a client can do in the app
+  - name: psychologist
+    description: Everything that a client can do in the app
+
+
+
+paths:
+  /client/login:
+    post:
+      tags: 
+        - client
+      summary: Log in a client
+      description: Login request
+      operationId: login
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Succesfull login
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Session token for the logged in client
+        '400':
+          description: Bad request
+  /client/getdetails:
+    get:
+      tags: 
+        - client
+      summary: Get details of a client
+      description: Get all the details of a specific client
+      operationId: getdetail
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful operation. An array of objects is returned.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sub:
+                    type: string
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  phone:
+                    type: string
+                  address:
+                    type: string
+                  createdAt:
+                    type: string
+                  Invoice:
+                    type: array
+                    items:
+                      type: object
+                  Documents:
+                    type: array
+                    items:
+                      type: object
+                  tasks:
+                    type: array
+                    items:
+                      type: object
+                  topicSuggestions:
+                    type: array
+                    items:
+                      type: object
+                  occasions:
+                    type: string
+                  therapist:
+                    type: string
+        '401':
+          description: Unauthorized
+        '500':
+           description: Unauthorized
+  /client/newtopic:
+    post:
+      tags: 
+        - client
+      summary: Add a new topic suggestion for a client
+      description: Client can adding new topics to the next session
+      operationId: newTopic
+      security:
+        - bearerAuth: []
+      requestBody:
+          description: New topic suggestion
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  topic:
+                    type: string
+                required:
+                  - topic
+      responses:
+        '200':
+          description: Successful topic suggestions
+        '400':
+          description: Bad request (authorization header missing)
+        '401':
+          description: Unauthorized (authorization token missing)
+        '403':
+          description: Forbidden
+        '404':
+          description: No preference for this temperature
+  /psychologist/login:
+    post:
+      tags:
+        - psychologist
+      summary: Psychologist login
+      description: Login a psychologist and get a session token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - code
+              properties:
+                code:
+                  type: string
+              example:
+                code: "somerandomcode"
+        required: true
+      security:
+        - bearerAuth: []
+      responses:
+          '200':
+            description: Successful response, returns a session token.
+          '400':
+            description: Invalid input. Returned if the input parameter is missing or invalid.
+          '403':
+            description: Forbidden
+  /psychologist/allclients:        
+    get:
+      tags:
+        - psychologist
+      summary: Get all clients of a psychologist
+      description: Adds a favorite city for a logged in user. If the city already exist in the DB, it will be extended for the given user.
+      operationId: postFavCity
+      security:
+        - bearerAuth: []
+      responses:
+          '200':
+            description: Successful operation. An array of objects is returned.
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/CityResponse'
+              application/xml:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/CityResponse'
+          '401':
+            description: Unauthorized
+          '403':
+            description: Forbidden
+  /psychologist/{sub}:
+    get:
+      tags:
+        - psychologist
+      summary: Get a client detail
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: sub
+          in: path
+          description: The client's sub value.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response, returns a client detail.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CityResponse'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CityResponse'
+        '401':
+          description: Unauthorized (authorization token missing)
+        '403':
+          description: Forbidden
+  /clientprogression/{sub}:
+    post:
+      tags:
+        - psychologist
+      summary: Add a progression for a client
+      description:  Use this endpoint to add a new progression for a client.
+      parameters:
+        - in: path
+          name: sub
+          description: The sub identifier of the client to add the progression to.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad request
+  /addnote/{sub}:
+    post:
+      tags:
+        - psychologist
+      summary: Add a note to a client's profile
+      parameters:
+        - in: path
+          name: sub
+          schema:
+            type: string
+          required: true
+          description: The client's sub (subject) identifier
+      security:
+        - bearerAuth: []    
+      responses:
+        '200':
+          description: The updated client objec
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad request error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  hiba van:
+                    type: string
+                    description: The error message        
+  /addevent/{sub}:
+    post:
+      tags:
+        - psychologist
+      summary: Add an event for a client
+      description: Add an event for the client with the specified sub value
+      operationId: addevent
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: sub
+          required: true
+          description: The sub value of the client to add the event for
+          schema:
+            type: string  
+      responses:
+        '200':
+          description: Successful operation.
+        '400':
+          description: Bad Request
+        '403':
+          description: Forbidden
+  /addtocalendar:
+    post:
+      tags:
+        - psychologist
+      summary: "Add an event to the psychologist's primary Google Calendar"
+      description: "This endpoint adds an event to the primary Google Calendar of the psychologist. The event object should include the required properties specified in the Google Calendar API documentation."
+      requestBody:
+        description: "The event object to be added to the calendar"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: string
+        "400":
+          description: "Bad Request"
+          content:
+            application/json:
+              schema:
+                type: string
+      security:
+        - bearerAuth: []
+  /addclientemail:
+    post:
+      summary: "Add client email to the psychologist's list of clients"
+      tags:
+        - psychologist
+      requestBody:
+        description: Request body containing the client email
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/models/ClientEmail'
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: string
+        "400":
+          description: "Error response"
+          content:
+            application/json:
+              schema:
+                type: string
+components:
+  schemas:
+    Progression:
+      type: object
+      properties:
+        name:
+          type: string
+        percentages:
+          type: number
+        startDate:
+          type: string
+          format: date-time
+    TopicSuggestion:
+      type: object
+      properties:
+        deadline:
+          type: string
+          format: date-time
+        title:
+          type: string
+        description:
+          type: string
+    Client:
+      type: object
+      properties:
+        sub:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        Invoice:
+          type: array
+          items:
+            type: object
+        Documents:
+          type: array
+          items:
+            type: object
+        tasks:
+          type: array
+          items:
+            type: object
+        topicSuggestions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TopicSuggestion'
+        occasions:
+          type: array
+          items:
+            type: object
+        therapist:
+          type: string
+        notes:
+          type: array
+          items:
+            type: object
+        progressions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Progression'
+        access_token:
+          type: string
+    PsychoSchema:
+      type: object
+      properties:
+        sub:
+          type: string
+          description: Unique identifier for the psychotherapist.
+          unique: true
+        picture:
+          type: string
+          description: URL of the psychotherapist's profile picture.
+        name:
+          type: string
+          description: The name of the psychotherapist.
+        email:
+          type: string
+          description: The email of the psychotherapist.
+        oradij:
+          type: number
+          description: The hourly rate of the psychotherapist.
+        clients:
+          type: array
+          description: An array of client emails associated with the psychotherapist.
+          items:
+            type: string
+        access_token:
+          type: string
+          description: The access token for the Google API for calendar events.

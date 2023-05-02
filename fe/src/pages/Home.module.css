@@ -1,0 +1,61 @@
+/*color:#E56638, */
+ /*color: #087E8B, */
+
+
+.your {
+    font-family: 'Pacifico', serif;
+}
+
+.homeMainDiv{
+    background-color: #087E8B;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    gap: 140px;
+    align-items: center;
+    flex-direction: column;
+    color: #F5F5F5;
+}
+.middleDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 20px;
+    align-items: center;
+    height: 80%;
+    width: 60%;
+}
+.upperTextDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 6rem;
+}
+.upperTextDiv h2{
+    font-size: 2rem;
+}
+.loginButtonsDiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 50%;
+}
+
+@media (max-width: 992px) {
+    .loginButtonsDiv {
+      flex-direction: column;
+      gap: 30px;
+
+    }
+    .homeMainDiv{
+        gap: 500px;
+        height: 100%;
+    }
+    .middleDiv{
+        width:100%;
+        padding-top: 70px;
+    }
+  }

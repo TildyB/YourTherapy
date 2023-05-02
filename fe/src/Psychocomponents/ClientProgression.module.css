@@ -1,0 +1,23 @@
+.oneProgressionDiv{
+    display: flex;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 5px;
+}
+.oneProgressionDivLeft{
+    width: 80%;
+}
+.oneProgressionDivRight{
+    width: 20%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: large;
+}
+.oneProgressionDivButtons{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
