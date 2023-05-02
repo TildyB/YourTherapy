@@ -1,8 +1,10 @@
-#Your Therapy
+# Your Therapy
 
 This project is a full-stack web application built using Node.js with Express.js for the backend and React with Vite for the frontend. Getting Started Prerequisites
 
-Make sure you have Node.js installed on your machine. You can download it from the official website: https://nodejs.org/ ##Installation
+Make sure you have Node.js installed on your machine. You can download it from the official website: https://nodejs.org/ 
+
+## Installation
 
 Clone the repository to your local machine using Git:
 
@@ -32,7 +34,7 @@ Create a .env file in the backend directory of the project and add any necessary
 
 // example .env file PORT=5000 DB_URI=mongodb://localhost:27017/my-database JWT_SECRET=mysupersecretkey CLIENT_ID = a client ID for the OAuth2 application from the Google Developer Console. CLIENT_SECRET = a secret key for the OAuth2 application from the Google Developer Console. API_KEY = Google Calendar API KEy
 
-##Usage
+## Usage
 
 Start the backend server:
 
