@@ -17,11 +17,11 @@ Make sure you have Node.js installed on your machine. You can download it from t
 
     
 
- Navigate to the project backend directory:
-    cd be
+    Navigate to the project backend directory:
+        cd be
 
-Install the backend dependencies:
-    npm install
+    Install the backend dependencies:
+        npm install
 
     Navigate to the frontend directory:
 
@@ -29,7 +29,7 @@ Install the backend dependencies:
 
     Install the frontend dependencies:
 
-    npm install
+        npm install
 
     Create a .env file in the backend directory of the project and add any necessary environment variables.
 
@@ -49,6 +49,6 @@ API_KEY = Google Calendar API KEy
 
     Start the frontend development server:
 
-            npm run dev
+         npm run dev
 
     Access the frontend by navigating to http://localhost:5173 in your browser.
