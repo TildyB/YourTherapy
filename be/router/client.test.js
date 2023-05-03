@@ -8,7 +8,10 @@ const Psychologist = require("../models/PsychoSchema")
 const Clients = require("../models/ClientSchema")
 const MongoMemoryServer = require("mongodb-memory-server").MongoMemoryServer;
 const mongoose = require("mongoose");
+const jwt = require('jsonwebtoken');
 
+jest.mock("../api/getIDToken")
+const getIdToken = require ("../api/getIDToken")
 let mongoDb;
 
 const connect = async () => {
@@ -30,70 +33,40 @@ const clearData = async () => {
 
 const testApp = supertest(app)
 
-/* describe('POST /login', () => {
-    
-    beforeAll(connect)
-    afterAll(disconnect)
 
-    beforeEach(async () => {
-        await Psychologist.deleteMany({})
-        await Clients.deleteMany({})
-    
-        const psychologist = new Psychologist({
-          name: 'Test Psychologist',
-          email: 'testpsychologist@example.com',
-          password: 'testpassword',
-          clients: []
-        })
-    
-        await psychologist.save()
-    
-        let client = new Clients({
-          sub: '123',
-          email: 'testclient@example.com',
-          name: 'Test Client',
-          picture: 'testpicture',
-          phone: null,
-          address: null,
-          createdAt: new Date(),
-          Invoice: [],
-          Documents: [],
-          tasks: [],
-          topicSuggestions: [],
-          occasions: null,
-          therapist: psychologist.name,
-          notes: [],
-          progressions:[],
-          access_token: 'testaccesstoken'
-        })
-    
-        await client.save()
-      })
-    
-      afterEach(async () => {
-        await Psychologist.deleteMany({})
-        await Clients.deleteMany({})
-      })
-      it('should log in a registered client and return a session token', async () => {
-        const code = 'testcode'
-    
-        const response = await supertest(app)
-          .post('/api/client/login')
-          .send({ code })
-    
-        expect(response.status).toBe(200)
-        expect(response.body).toBeDefined()
-        const sessionToken = response.body
-        const decodedToken = jwt.decode(sessionToken)
-    
-        expect(decodedToken).toBeDefined()
-        expect(decodedToken.sub).toBe(client.sub)
-        expect(decodedToken.email).toBe(client.email)
-        expect(decodedToken.name).toBe(client.name)
-        expect(decodedToken.picture).toBe(client.picture)
-      })
+describe("POST /login", () => {
+  beforeAll(connect);
+  afterEach(clearData);
+  afterAll(disconnect);
 
-}) */
+  it("should return a session token when given a valid login code", async () => {
+    // given
+    const code = "as56df5w5a8d823djak";
+    const mockToken = process.env.TEST_TOKEN;
+    const mockPayload = { email: "jane@example.com", sub: "123456" };
+    const mockPsychologist = new Psychologist({
+      name: "Dr. Smith",
+      email: "portaproba85@gmail.com",
+      clients: [{ email: mockPayload.email }],
+    });
+    await mockPsychologist.save();
+    const mockedGetIdToken = jest.mocked(getIdToken);
+    mockedGetIdToken.mockResolvedValueOnce({
+      id_token: mockToken,
+      access_token: "mock_access_token",
+      refresh_token: "mock_refresh_token",
+    });
+    const expectedToken = jwt.sign(mockPayload, process.env.JWT_SECRET || { expiresIn: 0 });
+
+    // when
+    const response = await testApp.post("/api/client/login").send({ code });
+
+    // then
+    const dbContent = await Clients.find()
+    expect(dbContent).toHaveLength(1)
+    expect(response.status).toBe(200);
+  });
+});
 
 describe('GET /getdetails', () =>{
     beforeAll(connect)

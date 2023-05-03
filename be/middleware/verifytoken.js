@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken")
 require("dotenv").config()
 
 const verifyToken = (req, res, next) => {
-  console.log("bejott a verifyban")
   const header = req.headers["authorization"]
 
   if (!header) return res.status(401)

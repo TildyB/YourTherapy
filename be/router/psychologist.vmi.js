@@ -323,7 +323,7 @@ describe("POST /addtask/:sub", () => {
   });
 });
 
-describe("DELETE '/deletetask/:sub'", () => {
+describe("DELETE /deletetask/:sub/:id", () => {
   beforeAll(connect)
   afterEach(clearData)
   afterAll(disconnect)
@@ -350,6 +350,7 @@ describe("DELETE '/deletetask/:sub'", () => {
           deadline: "2021-02-08T00:00:00.000Z",
           isDone: false,
           isUrgent: false,
+          _id: "6450e6a1013224ca555a1934"
         }
       ],
       topicSuggestions: [],
@@ -363,7 +364,7 @@ describe("DELETE '/deletetask/:sub'", () => {
 
     // Make a POST request to add a client email
     const res = await testApp
-      .delete(`/api/psychologist/deletetask/${client.sub}`)
+      .delete(`/api/psychologist/deletetask/${client.sub}/${client.tasks[0]._id}`)
       .set("Authorization", `Bearer ${token}`)
       .send(newData);
 

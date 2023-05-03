@@ -41,14 +41,14 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({error: result.error})
     }
     const loginRequest = result.data
-
     redirect_uri = "http://localhost:5173/clientcallback"
     const allData = await getIDToken(loginRequest.code,redirect_uri)
     const {id_token,access_token,refresh_token} = allData
     if (!id_token) return res.sendStatus(401)
     const payload = jwt.decode(id_token)
-
+    console.log(payload)
     const psychologist = await Psychologist.findOne({email: "portaproba85@gmail.com"})
+    console.log(psychologist)
     if (!psychologist) {
       return { success: false, message: 'Invalid email or password' };
     }
@@ -138,11 +138,9 @@ router.post('/login', async (req, res) => {
   router.post('/newtopic', verifytoken, async (req, res) => { 
     const clientEmail = res.locals.email
     const client = await Client.findOne({email: clientEmail})
-    console.log(client)
     if (!client) return res.status(400).json({error: "client not found"})
 
     const newTopic = req.body
-    console.log(newTopic)
     client.topicSuggestions.push(newTopic)
 
     await client.save()
