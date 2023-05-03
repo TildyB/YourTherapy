@@ -79,7 +79,7 @@ router.post('/login', async (req, res) => {
     if (!id_token) return res.sendStatus(401)
 
     const payload= jwt.decode(id_token)
-
+    console.log(payload)
     const findPsychologist = await Psychologist.findOne({email: payload.email})
     if (!findPsychologist) { return res.sendStatus(401) }
       findPsychologist.access_token = access_token

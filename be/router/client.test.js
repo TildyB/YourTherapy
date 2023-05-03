@@ -8,7 +8,6 @@ const Psychologist = require("../models/PsychoSchema")
 const Clients = require("../models/ClientSchema")
 const MongoMemoryServer = require("mongodb-memory-server").MongoMemoryServer;
 const mongoose = require("mongoose");
-const jwt = require('jsonwebtoken');
 
 jest.mock("../api/getIDToken")
 const getIdToken = require ("../api/getIDToken")
@@ -56,8 +55,6 @@ describe("POST /login", () => {
       access_token: "mock_access_token",
       refresh_token: "mock_refresh_token",
     });
-    const expectedToken = jwt.sign(mockPayload, process.env.JWT_SECRET || { expiresIn: 0 });
-
     // when
     const response = await testApp.post("/api/client/login").send({ code });
 

@@ -9,6 +9,9 @@ const Clients = require("../models/ClientSchema")
 const MongoMemoryServer = require("mongodb-memory-server").MongoMemoryServer;
 const mongoose = require("mongoose");
 
+jest.mock("../api/getIDToken")
+const getIdToken = require ("../api/getIDToken")
+
 let mongoDb;
 
 const connect = async () => {
@@ -29,6 +32,39 @@ const clearData = async () => {
 
 
 const testApp = supertest(app)
+
+
+describe("POST /login", () => {
+  beforeAll(connect);
+  afterEach(clearData);
+  afterAll(disconnect);
+
+  it("should return a session token when given a valid login code", async () => {
+    // given
+    const code = "as56df5w5a8d823djak";
+    const mockToken = process.env.TEST_TOKEN;
+    const mockPayload = { email: "jane@example.com", sub: "123456" };
+    const mockPsychologist = new Psychologist({
+      name: "Dr. Smith",
+      email: "jane@example.com"
+    });
+    await mockPsychologist.save();
+    const mockedGetIdToken = jest.mocked(getIdToken);
+    mockedGetIdToken.mockResolvedValueOnce({
+      id_token: mockToken,
+      access_token: "mock_access_token",
+      refresh_token: "mock_refresh_token",
+    });
+    // when
+    const response = await testApp.post("/api/psychologist/login").send({ code });
+
+    // then
+    const dbContent = await Psychologist.find()
+    expect(dbContent).toHaveLength(1)
+    expect(response.status).toBe(200);
+  });
+});
+
 
 
 describe("GET /api/psychologist/allclients", () => {
