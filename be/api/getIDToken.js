@@ -37,7 +37,6 @@ const url = "https://oauth2.googleapis.com/token"
             console.log("ez itt a hiba?")
             return null      
         }
-        console.log("ez itt a result",result.data);
         return result.data
 
     } catch (err) {

@@ -5,7 +5,6 @@ import { Button } from "@chakra-ui/react";
 
 const MenuBar = () => {
   const { user,isLoggedIn,logout } = useContext(UserContext);
-  console.log(user, "user");
   return (
     <div className={styles.menuBarMainDiv}>
       <h1>

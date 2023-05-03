@@ -3,7 +3,7 @@ import { UserContext } from "../context/UserContext";
 import axios from "axios";
 import styles from "./PsychoDashboard.module.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { useDisclosure } from "@chakra-ui/react";
+import { resolveStyleConfig, useDisclosure } from "@chakra-ui/react";
 
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import NoteAccordition from "../Psychocomponents/NoteAccordition";
@@ -26,42 +26,32 @@ const PsychoDashboard = () => {
   const [loading, setIsLoading] = useState(true);
   const [events, setEvents] = useState([]);
 
-  const btnRef = useRef();
-  const { onClose } = useDisclosure();
   useEffect(() => {
     const getClientDetails = async () => {
-      console.log(clientsub);
       const response = await axios.get(
         `http://localhost:8004/api/psychologist/${clientsub}`,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
       );
-      console.log(response.data);
       setClient(response.data);
     };
     getClientDetails();
     setIsLoading(false);
   }, [newData]);
 
-  useEffect(() => {
-    const getEvents = async () => {
-      const response = await axios.get(
-        'http://localhost:8004/api/psychologist/getevents',
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-      );
-      console.log(response.data);
-      setEvents(response.data);
-    };
-    getEvents();
-  }, []);
-
+  const getEvents = async () => {
+    const response = await axios.get(
+      `http://localhost:8004/api/psychologist/getevents`,
+      {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      }
+    );
+    console.log(response.data);
+  };
 
 
   const sendNote = async (onClose) => {
-    console.log("sendnote", note, "clientsub", clientsub);
     const response = await axios.post(
       `http://localhost:8004/api/psychologist/addnote/${clientsub}`,
       {
@@ -146,6 +136,7 @@ const PsychoDashboard = () => {
 
             </div>
       </div>
+      <button onClick={getEvents}>get events</button>
     </div>
   );
 };

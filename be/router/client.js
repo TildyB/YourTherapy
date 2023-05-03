@@ -46,9 +46,9 @@ router.post('/login', async (req, res) => {
     const {id_token,access_token,refresh_token} = allData
     if (!id_token) return res.sendStatus(401)
     const payload = jwt.decode(id_token)
-    console.log(payload)
+
     const psychologist = await Psychologist.findOne({email: "portaproba85@gmail.com"})
-    console.log(psychologist)
+
     if (!psychologist) {
       return { success: false, message: 'Invalid email or password' };
     }
@@ -56,7 +56,6 @@ router.post('/login', async (req, res) => {
 
       // if there's no matching client, return an error
       if (index === -1) {
-        console.log("no matching client")
         return { success: false, message: 'Sorry you have no permission' };
       }
       

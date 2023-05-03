@@ -17,7 +17,6 @@ import { useState,useContext } from "react"
 function App() {
   
   const {isLoggedIn} = useContext(UserContext)
-  console.log(isLoggedIn)
   return (
       <ChakraProvider>
         <BrowserRouter>

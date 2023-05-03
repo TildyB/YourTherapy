@@ -10,7 +10,7 @@ const ClientProgressionButtons = ({setNewData,newData,id,percentage,clientsub}) 
     const [progressionId, setProgressionId] = useState(id)
     const [minusDisable, setminusDisable] = useState(false)
     const [plusDisable, setplusDisable] = useState(false)
-    console.log(newprogression)
+
     useEffect(() => {
         if(newprogression <=0){
             setminusDisable(true)
@@ -25,7 +25,6 @@ const ClientProgressionButtons = ({setNewData,newData,id,percentage,clientsub}) 
         }
 
         const sendProgression = async () => {
-          console.log("send progression called")
           const response = await axios.put(
             `http://localhost:8004/api/psychologist/dicreaseprogression/${clientsub}`,
             {
@@ -36,19 +35,18 @@ const ClientProgressionButtons = ({setNewData,newData,id,percentage,clientsub}) 
               headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
             }
           );
-          console.log(response.data);
         };
         sendProgression();
         setNewData(!newData);
       }, [newprogression]);
   
     const increaseProgression = async(progression,id) => {
-      console.log("increase progression called")
+
       setNewProgression(newprogression + 10);
       setProgressionId(id)
     }
     const decreaseProgression = async(progression,id) => {
-        console.log("increase progression called")
+
         setNewProgression(newprogression - 10);
         setProgressionId(id)
       }

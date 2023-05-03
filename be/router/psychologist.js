@@ -87,7 +87,6 @@ router.post("/login", async (req, res) => {
 
   const result2 = Payload.safeParse(payload);
   if (!result2.success) {
-    console.log(result2.error);
     return res.sendStatus(500);
   }
   const expireDate = {
@@ -101,9 +100,7 @@ router.post("/login", async (req, res) => {
   res.json(sessionToken);
 });
 
-router.get(
-  "/allclients",
-  /* verifytoken */ async (req, res) => {
+router.get("/allclients",/* verifytoken */ async (req, res) => {
     const clients = await Clients.find({}, { name: 1, email: 1, sub: 1 });
     res.send(clients);
     // res.send(psychologist.clients)
@@ -199,25 +196,13 @@ router.post("/addnote/:sub", verifytoken, async (req, res) => {
   if (!client) return res.status(400).json({ "hiba van": "hiba" });
   res.send(client);
 });
-router.get("/getevents", verifytoken, async (req, res) => {
-  const psychologistEmail = res.locals.email;
-  const psychologist = await Psychologist.findOne({ email: psychologistEmail });
 
-  if (!psychologist) return res.status(400).json("Psychologist not found");
-  access_token = psychologist.access_token;
-  const events = await axios.get(
-    "https://www.googleapis.com/calendar/v3/calendars/primary/events",
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: `Bearer ${access_token}`,
-      },
-    }
-  );
-
-  res.send(events.data);
+router.get("/getevents",verifytoken, async (req, res) => {
+  res.send({
+    events: "hallo"
+  })
 });
+
 
 router.post("/addevent/:sub", verifytoken, async (req, res) => {
   const clientSub = req.params.sub;
