@@ -16,7 +16,6 @@ const Home = () => {
           <ClientLoginButton />
           <PsychoLoginButton />
         </div>
-        <button onClick={() => navigate("/psycho-dashboard")}>Tovabb</button>
       </div>
     </div>
   );

@@ -60,7 +60,7 @@ const PsychoDashboard = () => {
 
 
 
-  const sendNote = async () => {
+  const sendNote = async (onClose) => {
     console.log("sendnote", note, "clientsub", clientsub);
     const response = await axios.post(
       `http://localhost:8004/api/psychologist/addnote/${clientsub}`,

@@ -28,7 +28,7 @@ const AddClientNotes = ({note,handleTitleChange,handleContentChange,sendNote}) =
       </Button>
       <Drawer
         isOpen={isOpen}
-        placement="right"
+        placement="top"
         onClose={onClose}
         finalFocusRef={btnRef}
       >
@@ -56,7 +56,7 @@ const AddClientNotes = ({note,handleTitleChange,handleContentChange,sendNote}) =
             <Button variant="outline" mr={3} onClick={onClose}>
               Kilépés
             </Button>
-            <Button onClick={sendNote} colorScheme="blue">
+            <Button onClick={()=>sendNote(onClose)} colorScheme="blue">
               Mentés
             </Button>
           </DrawerFooter>

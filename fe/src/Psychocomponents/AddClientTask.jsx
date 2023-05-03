@@ -58,7 +58,7 @@ const AddClientTask = ({setNewData,newData}) => {
       </Button>
       <Drawer
         isOpen={isOpen}
-        placement="right"
+        placement="top"
         onClose={onClose}
         finalFocusRef={btnRef}
       >

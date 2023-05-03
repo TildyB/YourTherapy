@@ -10,7 +10,7 @@ const LoginButton = () => {
   const redirectUri = "http://localhost:5173/psychocallback"
   const scope = "openid%20profile%20email%20https://www.googleapis.com/auth/calendar"
   const prompt = "consent"
-  const googleUrl = `${rootUrl}?client_id=${googleClientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&prompt=${prompt}&access_type=offline`
+  const googleUrl = `${rootUrl}?client_id=${googleClientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&access_type=offline`
   
   return (
     <a href={googleUrl} className={styles.clientLoginDiv}>

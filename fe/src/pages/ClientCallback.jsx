@@ -21,7 +21,7 @@ const ClienCallback = () => {
                 const token = response.data
                 const decoded = jwt_decode(token)
                 const user = {
-                    name: decoded.name,
+                    name: decoded.family_name + " " + decoded.given_name,
                     email: decoded.email,
                     picture: decoded.picture,
                 }

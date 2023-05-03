@@ -4,12 +4,28 @@
     height: 70px;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     gap: 30px;
+    padding-left: 30px;
     padding-right: 30px;   
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
     z-index: 3;
     position: absolute;
     
+}
+.your {
+    font-family: 'Pacifico', serif;
+}
+.menuRightDiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap: 30px;
+}
+.menuName{
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: wavy;
 }

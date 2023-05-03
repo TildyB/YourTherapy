@@ -1,4 +1,6 @@
 import {useState} from "react";
+
+import axios from "axios";
 import {
     Button,
     Input,
@@ -11,18 +13,36 @@ import {
   PopoverArrow,
   PopoverCloseButton,
   PopoverAnchor,
+  useToast
 } from "@chakra-ui/react";
-import axios from "axios";
 
-const AddNewClient = () => {
-    const [email, setEmail] = useState("");
-    console.log(email)
-    const sendNewClientEmail = async() => {
+const AddNewClient = ({setEmail,email}) => {
+  const toast = useToast()
+  
+  const sendNewClientEmail = async() => {
         const response = await axios.post("http://localhost:8004/api/psychologist/addclientemail",
         {email: email},
         { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
         )
         console.log(response)
+        if(response.data ==="client already exist"){
+          toast({
+            title: 'Nem tudja elmenteni a klienst.',
+            description: "Ez a kliens már létezik.",
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+          })
+          return
+        }else{
+          toast({
+            title: 'Sikeres mentése',
+            description: "Elmentette a klienst.",
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+          })
+        }
     }
   return (
     <Popover>
@@ -39,6 +59,7 @@ const AddNewClient = () => {
         </PopoverBody>
       </PopoverContent>
     </Popover>
+
   );
 };
 

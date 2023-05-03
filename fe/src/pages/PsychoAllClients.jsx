@@ -12,6 +12,7 @@ import AddNewClient from "../Psychocomponents/AddNewClient";
 const PsychoAllClients = () => {
   const navigate = useNavigate();
   const [clients, setClients] = useState(null);
+  const [email, setEmail] = useState("");
 
   const {clientSub, setClientsub } = useContext(UserContext);
 
@@ -23,7 +24,7 @@ const PsychoAllClients = () => {
       setClients(response.data);
     };
     fetchClients();
-  }, []);
+  }, [email]);
 
   const getClientDetails = (e) => {
     setClientsub(e.target.value);
@@ -58,7 +59,7 @@ const PsychoAllClients = () => {
           <Button onClick={changeRoute} colorScheme="blue">
             Tovább
           </Button>
-          <AddNewClient />
+          <AddNewClient setEmail={setEmail} email={email} />
         </div>
       </div>
     </div>

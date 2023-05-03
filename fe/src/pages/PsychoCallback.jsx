@@ -12,7 +12,6 @@ const PsychoCallback = () => {
     const  {login} = useContext(UserContext)
     const [searchParams] = useSearchParams()
     const code = searchParams.get("code")
-    console.log(code)
     
     useEffect(() => {
         const fetchToken = async () => {
@@ -21,7 +20,7 @@ const PsychoCallback = () => {
             const token = response.data
             const decoded = jwt_decode(token)
             const user = {
-                name: decoded.name,
+                name: decoded.family_name + " " + decoded.given_name,
                 email: decoded.email,
                 picture: decoded.picture,
               }
