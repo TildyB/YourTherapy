@@ -14,7 +14,7 @@ const PsychoAllClients = () => {
   const [clients, setClients] = useState(null);
   const [email, setEmail] = useState("");
 
-  const {clientSub, setClientsub } = useContext(UserContext);
+  const { clientSub, setClientsub } = useContext(UserContext);
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -37,9 +37,7 @@ const PsychoAllClients = () => {
   return (
     <div className={styles.psychoAllClients}>
       <div className={styles.allClientsInside}>
-        <h1 >
-          Kérlek válaszd ki a kliens nevét:
-        </h1>
+        <h1>Kérlek válaszd ki a kliens nevét:</h1>
         <div className={styles.allClientInput}>
           <Select placeholder="Select option" onChange={getClientDetails}>
             {clients !== null ? (

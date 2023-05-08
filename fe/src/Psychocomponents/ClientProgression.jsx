@@ -1,11 +1,7 @@
-import { Progress, Button,IconButton } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { AddIcon,MinusIcon } from '@chakra-ui/icons'
+import { Progress} from "@chakra-ui/react";
 import AddClientProgression from "./AddClientProgression";
 import ClientProgressionButtons from "./ClientProgressionButtons";
 import styles from "./ClientProgression.module.css";
-import axios from "axios";
-
 
 const ClientProgress = ({
   client,
@@ -15,7 +11,6 @@ const ClientProgress = ({
   progression,
   setProgression,
 }) => {
-
   return (
     <div>
       {client != null && client.progressions.length > 0 ? (
@@ -33,7 +28,13 @@ const ClientProgress = ({
             </div>
             <div className={styles.oneProgressionDivRight}>
               <h2>{progression.percentages}%</h2>
-              <ClientProgressionButtons setNewData={setNewData} newData={newData} clientsub={clientsub} id={progression._id} percentage={progression.percentages}/>
+              <ClientProgressionButtons
+                setNewData={setNewData}
+                newData={newData}
+                clientsub={clientsub}
+                id={progression._id}
+                percentage={progression.percentages}
+              />
             </div>
           </div>
         ))

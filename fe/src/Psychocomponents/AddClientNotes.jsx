@@ -1,11 +1,5 @@
-import { useContext, useEffect, useState, useRef } from "react";
+import { useRef } from "react";
 import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  Box,
   Button,
   Drawer,
   DrawerBody,
@@ -15,15 +9,20 @@ import {
   DrawerContent,
   DrawerCloseButton,
   Input,
-  useDisclosure
+  useDisclosure,
 } from "@chakra-ui/react";
 
-const AddClientNotes = ({note,handleTitleChange,handleContentChange,sendNote}) =>{
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const btnRef = useRef();
-    return (
-        <div>
-        <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
+const AddClientNotes = ({
+  note,
+  handleTitleChange,
+  handleContentChange,
+  sendNote,
+}) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = useRef();
+  return (
+    <div>
+      <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
         Jegyzet hozzáadása
       </Button>
       <Drawer
@@ -56,14 +55,14 @@ const AddClientNotes = ({note,handleTitleChange,handleContentChange,sendNote}) =
             <Button variant="outline" mr={3} onClick={onClose}>
               Kilépés
             </Button>
-            <Button onClick={()=>sendNote(onClose)} colorScheme="blue">
+            <Button onClick={() => sendNote(onClose)} colorScheme="blue">
               Mentés
             </Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
-      </div>
-    )
-}
+    </div>
+  );
+};
 
-export default AddClientNotes
+export default AddClientNotes;

@@ -42,6 +42,24 @@
     height: 70%;
 }
 
+@media  screen and (max-width: 375px) {
+    .container{
+        width: 100vw;
+        display: flex;
+        gap: 0;
+        padding:0;
+        padding-top: 10rem;
+    }
+    .leftSubContainer,.rightSubContainer{
+        width: 100%;
+        align-self: center;
+    }
+    .calendarDiv{
+        width: 100%;
+        height: 100%;
+    }
+  }
+
 @media (max-width: 992px) {
     .container {
       flex-direction: column;

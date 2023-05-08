@@ -1,13 +1,7 @@
-import { useContext, useEffect, useState, useRef } from "react";
+import { useContext, useState, useRef } from "react";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
 import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  Box,
   Button,
   Drawer,
   DrawerBody,

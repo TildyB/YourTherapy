@@ -1,8 +1,6 @@
 import styles from "./ClientLoginButton.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUser,
-} from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 const ClientLoginButton = () => {
   const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
@@ -15,14 +13,12 @@ const ClientLoginButton = () => {
   const googleUrl = `${rootUrl}?client_id=${googleClientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&prompt=${prompt}&access_type=offline`;
 
   return (
-    
-      <a href={googleUrl} className={styles.clientLoginDiv}>
-    <div className={styles.clientLoginInnerDiv}>
-      <FontAwesomeIcon icon={faUser} style={{ fontSize: 100}} />
-       Client Login
-    </div>
-       </a>   
-    
+    <a href={googleUrl} className={styles.clientLoginDiv}>
+      <div className={styles.clientLoginInnerDiv}>
+        <FontAwesomeIcon icon={faUser} style={{ fontSize: 100 }} />
+        Client Login
+      </div>
+    </a>
   );
 };
 

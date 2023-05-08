@@ -3,7 +3,6 @@ import { UserContext } from "../context/UserContext";
 import axios from "axios";
 import styles from "./PsychoDashboard.module.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { resolveStyleConfig, useDisclosure } from "@chakra-ui/react";
 
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import NoteAccordition from "../Psychocomponents/NoteAccordition";
@@ -13,7 +12,6 @@ import ClientCreateEvent from "../Psychocomponents/ClientCreateEvent";
 import ClienTasks from "../Psychocomponents/ClientTasks";
 
 import moment from "moment";
-import events from "../../resources/event";
 
 const PsychoDashboard = () => {
   const { clientsub } = useContext(UserContext);
@@ -49,7 +47,6 @@ const PsychoDashboard = () => {
     );
     console.log(response);
   };
-
 
   const sendNote = async (onClose) => {
     const response = await axios.post(
@@ -126,17 +123,15 @@ const PsychoDashboard = () => {
       <div className={styles.rightSubContainer}>
         <h1>Naptár</h1>
         <ClientCreateEvent />
-            <div className={styles.calendarDiv}>
-            <Calendar
-              localizer={localizer}
-              events={events}
-              startAccessor="start"
-              endAccessor="end"
-            />
-
-            </div>
+        <div className={styles.calendarDiv}>
+          <Calendar
+            localizer={localizer}
+            events={events}
+            startAccessor="start"
+            endAccessor="end"
+          />
+        </div>
       </div>
-      <button onClick={getEvents}>get events</button>
     </div>
   );
 };
