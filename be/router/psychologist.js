@@ -107,6 +107,9 @@ router.get("/allclients",/* verifytoken */ async (req, res) => {
   }
 );
 
+router.get("/getevents",verifytoken, async (req, res) => {
+
+});
 router.get("/:sub", verifytoken, async (req, res) => {
   const clientSub = req.params.sub;
 
@@ -197,11 +200,6 @@ router.post("/addnote/:sub", verifytoken, async (req, res) => {
   res.send(client);
 });
 
-router.get("/getevents",verifytoken, async (req, res) => {
-  res.send({
-    events: "hallo"
-  })
-});
 
 
 router.post("/addevent/:sub", verifytoken, async (req, res) => {

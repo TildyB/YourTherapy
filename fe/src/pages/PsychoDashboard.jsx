@@ -47,7 +47,7 @@ const PsychoDashboard = () => {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       }
     );
-    console.log(response.data);
+    console.log(response);
   };
 
 

@@ -332,6 +332,11 @@ paths:
               schema:
                 type: string
 components:
+  securitySchemes:
+    bearerAuth:            
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     Progression:
       type: object
